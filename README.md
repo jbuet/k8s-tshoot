@@ -19,8 +19,10 @@ Schedule en nodos master:
 kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 
-No schedulear 
+No schedulear:
+```
 kubectl taint nodes *nombre* node-role.kubernetes.io/master="":NoSchedule
+```
 
 Agregar label:  Esto es para los casos que no figura el rol del nodo
 ```
@@ -51,8 +53,8 @@ Logs dentro del cluster:
 ```
 kubectl logs *pods*
 kubectl logs *nombredeploy*
-Herramienta kail: https://github.com/boz/kail 
 ```
+* Herramienta kail: https://github.com/boz/kail 
 
 ### Eventos:
 ```
@@ -76,6 +78,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 ### Networking:
 Instalación de CNI: https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network
+https://kubernetes.io/docs/concepts/cluster-administration/addons/
 
 Troubleshoot: 
 https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/network.md
@@ -92,6 +95,24 @@ Los servicios no dependen de un namespace
 kubectl get svc
 ```
 El servicio *kuberntes* tiene el endpoing del APiServer (Master) y con el puerto que se definio al iniciar cluster (default 6443).
+
+##### SELINUX 
+SELINUX puede generar problemas al estar activado, para ver estado
+Ver estado:
+```
+/usr/sbin/getenforce o /usr/sbin/sestatus
+```
+Deshabilitar:
+1.
+```
+    Set SELINUX=disabled in file /etc/selinux/config (persistent even after reboot)
+```
+2.
+```
+   setenforce 0
+   reboot
+```
+
 
 
 
