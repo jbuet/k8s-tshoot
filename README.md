@@ -38,6 +38,11 @@ kubectl uncordon *nodo*
 Trooubleshooting Cluster:
 https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/cluster.md 
 
+### Pods, container e imagenes.
+Configurar pull imagen de Registry:
+*  https://docs.cloud.oracle.com/iaas/Content/Registry/Tasks/registrypullingimagesfromocir.htm 
+* https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+
 
 ### Logs
 Logs dentro del cluster:
@@ -74,6 +79,21 @@ Instalación de CNI: https://kubernetes.io/docs/setup/independent/create-cluster
 
 Troubleshoot: 
 https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/network.md
+
+Endpoints:
+Se diferencian por namespaces
+```
+kubectl get endpoints
+```
+
+Services:
+Los servicios no dependen de un namespace
+```
+kubectl get svc
+```
+El servicio *kuberntes* tiene el endpoing del APiServer (Master) y con el puerto que se definio al iniciar cluster (default 6443).
+
+
 
 ### Cambiar output
  agregar "-o *formato*
