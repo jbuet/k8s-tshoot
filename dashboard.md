@@ -11,5 +11,6 @@ Mas info: https://github.com/kubernetes/dashboard
 Crear usuario rbac: https://github.com/kubernetes/dashboard/wiki/Creating-sample-user#create-service-account 
 
 Token de autenticación:
+```
 kubectl -n kube-system describe secret ((kubectl -n kube-system get secret  | sls admin-user) -split "\s+")[0] 
-
+```

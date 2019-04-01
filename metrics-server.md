@@ -3,14 +3,13 @@ Para utilizar el comando: *kubectl top node* se debe implementar el servicio "me
 #### Implementar
 git clone https://github.com/kubernetes-incubator/metrics-server.git
 
-´´´
+```
 # Kubernetes 1.7
 $ kubectl create -f metrics-server/deploy/1.7/
 
 # Kubernetes > 1.8
 $ kubectl create -f metrics-server/deploy/1.8+/
-
-´´´
+```
 
 
 #### Errores:
@@ -20,10 +19,12 @@ $ kubectl create -f metrics-server/deploy/1.8+/
 
     En caso de error al hacer kubectl top node -> metrics not found
     agregar las siguientes opciones en archivo metrics-server-deployment.yaml por debajo de imagepullpolicy
+    ```
      command:
      - /metrics-server
      - --kubelet-insecure-tls
      - --kubelet-preferred-address-types=InternalIP
+     ```
 
      Verificar si pod resuelve nodos, caso que no modificar archivo de deployment con hostnames
      https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
@@ -34,7 +35,7 @@ $ kubectl create -f metrics-server/deploy/1.8+/
 * ejecutar: kubectl drain *node* 
 
 * limpiar iptables:
-´´´
+```
 systemctl stop kubelet
 systemctl stop docker
 iptables --flush
@@ -43,4 +44,4 @@ systemctl start kubelet
 systemctl start docker
 
 kubectl uncordon *node*
-´´´
+```

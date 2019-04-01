@@ -14,10 +14,12 @@ Pasos:
 3.  Instalar kubeadm https://kubernetes.io/docs/setup/independent/install-kubeadm/ 
 4.  Abrir puertos necesarios master/node: https://kubernetes.io/docs/setup/independent/install-kubeadm/#master-node-s
 5. deshabilitar swap
+    ```
     sudo swapon -s
     sudo swapoff -a
     y comentar en sudo vim /etc/fstab linea de swap
     luego reiniciar
+    ```
 
 6. revisar cgroup de kubernetes y docker sea el mismo
     * Identificar ubicacion de 10-kubeadm.conf (Archivo de configuracion de servicio kubelet)
@@ -47,6 +49,7 @@ verificar que los puertos en los workers esten abiertos
 https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/pod.md
 
 Eliminar nodo:
+```
 kubectl delete node nombre nodo
 en el nodo: 
 kubeadm reset
@@ -60,3 +63,4 @@ ifconfig flannel.1 down
 ifconfig docker0 down
 ip link delete cni0
 ip link delete flannel.1
+```
