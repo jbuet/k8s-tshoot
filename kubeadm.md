@@ -64,3 +64,19 @@ ifconfig docker0 down
 ip link delete cni0
 ip link delete flannel.1
 ```
+
+### Desinstalar kubeadm
+En master  ejecutar:
+
+1. kubectl delete node *node*
+2. kubeadm reset
+3. yum remove kubelet kubeadm kubectl kubernetes-cni kube*
+4. yum autoremove
+5. sudo rm -rf ~/.kube
+
+Ubuntu/debian:
+1. kubectl delete node *node*
+2. kubeadm reset
+3. sudo apt-get purge kubeadm kubectl kubelet kubernetes-cni kube*   
+4. sudo apt-get autoremove  
+5. sudo rm -rf ~/.kube

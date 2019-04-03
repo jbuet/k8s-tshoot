@@ -45,6 +45,9 @@ Configurar pull imagen de Registry:
 *  https://docs.cloud.oracle.com/iaas/Content/Registry/Tasks/registrypullingimagesfromocir.htm 
 * https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 
+### registry
+* https://hub.docker.com/_/registry
+* Harbor: https://goharbor.io/ 
 
 ### Logs
 Logs dentro del cluster:
@@ -55,6 +58,8 @@ kubectl logs *pods*
 kubectl logs *nombredeploy*
 ```
 * Herramienta kail: https://github.com/boz/kail 
+* Herramienta Stern: https://github.com/wercker/stern 
+* Deploy de DS para enviar logs a logly
 
 ### Eventos:
 ```
@@ -84,13 +89,11 @@ Troubleshoot:
 https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/network.md
 
 Endpoints:
-Se diferencian por namespaces
 ```
 kubectl get endpoints
 ```
 
 Services:
-Los servicios no dependen de un namespace
 ```
 kubectl get svc
 ```
@@ -113,12 +116,14 @@ Deshabilitar:
    reboot
 ```
 
-
-
-
 ### Cambiar output
  agregar "-o *formato*
  * -o wide
  * -o json
  * -o yaml
 
+
+### Migración
+* https://github.com/yaron2/azure-kube-cli
+* https://github.com/mhausenblas/reshifter
+* https://github.com/heptio/velero
