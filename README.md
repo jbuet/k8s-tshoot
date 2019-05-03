@@ -7,6 +7,15 @@ kubectl cluster-info dump --all-namespaces --output-directory=*path*
 versiones de api soportadas: kubectl api-versions 
 ```
 
+Healthcheck:
+kubectl get cs
+kubectl get events
+kubectl get nodes
+kubectl get apiservices
+
+tshoot: https://kubernetes.io/docs/tasks/debug-application-cluster/debug-cluster/ 
+
+
 ### Nodos:
 Obtener nodos:
 ```
@@ -45,6 +54,8 @@ Configurar pull imagen de Registry:
 *  https://docs.cloud.oracle.com/iaas/Content/Registry/Tasks/registrypullingimagesfromocir.htm 
 * https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 
+Tshoot pods: https://kubernetes.io/docs/tasks/debug-application-cluster/debug-application/ 
+
 ### registry
 * https://hub.docker.com/_/registry
 * Harbor: https://goharbor.io/ 
@@ -56,6 +67,7 @@ Logs dentro del cluster:
 ```
 kubectl logs *pods*
 kubectl logs *nombredeploy*
+kubectl logs --previous
 ```
 * Herramienta kail: https://github.com/boz/kail 
 * Herramienta Stern: https://github.com/wercker/stern 
@@ -87,6 +99,18 @@ https://kubernetes.io/docs/concepts/cluster-administration/addons/
 
 Troubleshoot: 
 https://github.com/feiskyer/kubernetes-handbook/blob/master/en/troubleshooting/network.md
+
+Flannel: cat /run/flannel/subnet.env
+* Limpiar ip tables:
+```
+systemctl stop kubelet
+systemctl stop docker
+iptables --flush
+iptables -tnat --flush
+systemctl start kubelet
+systemctl start docker
+```
+
 
 Endpoints:
 ```
@@ -127,3 +151,35 @@ Deshabilitar:
 * https://github.com/yaron2/azure-kube-cli
 * https://github.com/mhausenblas/reshifter
 * https://github.com/heptio/velero
+
+
+Tips eviction:
+Eviction: https://kubernetes.io/docs/tasks/administer-cluster/out-of-resource/ 
+# delete all evicted pods from all namespaces
+```
+kubectl get pods --all-namespaces | grep Evicted | awk '{print $2 " --namespace=" $1}' | xargs kubectl delete pod
+
+
+kubectl get pods --all-namespaces --field-selector 'status.phase==Failed' -o json | kubectl delete -f -
+```
+
+# delete all containers in ImagePullBackOff state from all namespaces
+
+```
+kubectl get pods --all-namespaces | grep 'ImagePullBackOff' | awk '{print $2 " --namespace=" $1}' | xargs kubectl delete pod
+```
+
+
+# delete all containers in ImagePullBackOff or ErrImagePull or Evicted state from all namespaces
+```
+kubectl get pods --all-namespaces | grep -E 'ImagePullBackOff|ErrImagePull|Evicted' | awk '{print $2 " --namespace=" $1}' | xargs kubectl delete pod
+```
+
+# Eliminar un pod en terminating de manera forzada
+```
+kubectl delete pod --grace-period=0 --force --namespace <NAMESPACE> <PODNAME> 
+```
+
+
+# Proxy:
+https://docs.oracle.com/cd/E52668_01/E88884/html/kube_admin_config_proxy.html
